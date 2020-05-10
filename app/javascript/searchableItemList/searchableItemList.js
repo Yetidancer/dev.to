@@ -1,8 +1,7 @@
 // Shared behavior between the reading list and history pages
 import setupAlgoliaIndex from '../src/utils/algolia';
 
-
-// Provides the initial state for the component Any component passed in
+// Provides the initial state for the component
 export function defaultState(options) {
   const state = {
     query: '',
@@ -60,7 +59,6 @@ export function clearSelectedTags(event) {
 }
 
 // Perform the initial search
-// This is really important. This provides the inital data for "items" Which is used to display initial articles
 export function performInitialSearch({
   containerId,
   indexName,

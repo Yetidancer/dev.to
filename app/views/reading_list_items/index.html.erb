@@ -16,7 +16,7 @@
   <meta name="twitter:title" content="Reading List - <%= community_qualified_name %>">
   <meta name="twitter:description" content="Reading List for dev.to">
 <% end %>
-<%# This loads the readinglist pack tag and passes the algolia key to allow for variables to be accessed in JS files%>
+
 <div class="home">
   <div class="item-list-container" id="reading-list" data-algolia-key="<%= @secured_algolia_key %>" data-view="<%= @view %>">
   </div>
