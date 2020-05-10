@@ -1,56 +1,70 @@
+<!-- this references the drop-down menu that shows up when you click on the user icon in the top right corner -->
 <div class="top-bar--menu-dropdown">
+  <!-- the below if statement uses a method that will return "true" if a user has already signed in -->
   <% if user_signed_in? %>
+  <!-- link to profile page -->
     <div id="user-profile-link-placeholder">
       <div class="option">
         ...
       </div>
     </div>
+    <!-- link to profile dashboard -->
     <a href="/dashboard">
       <div class="option">
         Dashboard
       </div>
     </a>
+    <!-- link to new post -->
     <a href="/new">
       <div class="option">
         Write a Post
       </div>
     </a>
+    <!-- link to readinglist -->
     <a href="/readinglist">
       <div class="option">
         Reading List
       </div>
     </a>
+    <!-- link to settings -->
     <a href="/settings">
       <div class="option">
         Settings
       </div>
     </a>
+    <!-- link to site information -->
     <a href="/p/information" id="second-last-nav-link">
       <div class="option">
         Key Links
       </div>
     </a>
+    <!-- link to log out -->
     <a href="/signout_confirm" id="last-nav-link">
       <div class="option">
         Sign Out
       </div>
     </a>
+    <!-- the "else" for if the user is not logged in -->
   <% else %>
+  <!-- link to sign in -->
     <a href="/enter" data-no-instant id="first-nav-link">
       <div class="header">
         Sign In/Up
       </div>
     </a>
+    <!-- link to sign in with twitter -->
     <a href="/users/auth/twitter?callback_url=<%= ApplicationConfig["APP_PROTOCOL"] %><%= ApplicationConfig["APP_DOMAIN"] %>/users/auth/twitter/callback" data-no-instant>
       <div class="option">
         Via Twitter
       </div>
     </a>
+    <!-- link to sign in with github -->
     <a href="/users/auth/github?state=navbar_basic" data-no-instant id="second-last-nav-link">
       <div class="option">
         Via GitHub
       </div>
     </a>
+    <!-- link to site information -->
     <a href="/p/information" id="last-nav-link">
       <div class="option">
         All about dev.to
