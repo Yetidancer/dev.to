@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { PropTypes } from 'preact-compat';
 import debounce from 'lodash.debounce';
 
+// Adds default state to the reading list component. SearchableItemList is used to create the default state values for this coponent as well as others.
 import {
   defaultState,
   loadNextPage,
@@ -11,6 +12,7 @@ import {
   toggleTag,
   clearSelectedTags,
 } from '../searchableItemList/searchableItemList';
+// Itemlist is a component that returns jsx to this component to be rendered. 
 import { ItemListItem } from '../src/components/ItemList/ItemListItem';
 import { ItemListItemArchiveButton } from '../src/components/ItemList/ItemListItemArchiveButton';
 import { ItemListLoadMoreButton } from '../src/components/ItemList/ItemListLoadMoreButton';
@@ -36,6 +38,7 @@ export class ReadingList extends Component {
     super(props);
 
     const { availableTags, statusView } = this.props;
+    // this is imported from searchableItemList and initializes the state.
     this.state = defaultState({ availableTags, archiving: false, statusView });
 
     // bind and initialize all shared functions
@@ -43,6 +46,7 @@ export class ReadingList extends Component {
       leading: true,
     });
     this.loadNextPage = loadNextPage.bind(this);
+    //perform initial state fetches our initial Article Data
     this.performInitialSearch = performInitialSearch.bind(this);
     this.search = search.bind(this);
     this.toggleTag = toggleTag.bind(this);
@@ -51,7 +55,8 @@ export class ReadingList extends Component {
 
   componentDidMount() {
     const { hitsPerPage, statusView } = this.state;
-
+    
+    //initialize our state, retrieves articles
     this.performInitialSearch({
       containerId: 'reading-list',
       indexName: 'SecuredReactions',
@@ -61,7 +66,8 @@ export class ReadingList extends Component {
       },
     });
   }
-
+  
+  // I think this swapps the readinglist from current to archived.
   toggleStatusView = event => {
     event.preventDefault();
 

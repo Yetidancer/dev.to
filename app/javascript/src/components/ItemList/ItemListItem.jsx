@@ -1,7 +1,7 @@
 // Item list item
 import { h } from 'preact';
 import { PropTypes } from 'preact-compat';
-
+// This component returns formatted HTML to display each article with details.
 export const ItemListItem = ({ item, children }) => {
   const adaptedItem = {
     path: item.article_path || item.searchable_reactable_path,

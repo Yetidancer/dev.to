@@ -1,6 +1,7 @@
 class ReadingListItemsController < ApplicationController
   def index
     @reading_list_items_index = true
+    # set_view allows for multiple routes to point here and then we can set view correctly.
     set_view
     generate_algolia_search_key
   end

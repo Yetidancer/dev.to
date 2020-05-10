@@ -362,6 +362,7 @@ Rails.application.routes.draw do
 
   get "/pod", to: "podcast_episodes#index"
   get "/podcasts", to: redirect("pod")
+  # route to change view to their reading list Add route to collections here
   get "/readinglist" => "reading_list_items#index"
   get "/readinglist/:view" => "reading_list_items#index", :constraints => { view: /archive/ }
 
