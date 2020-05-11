@@ -18,6 +18,7 @@ class Article < ApplicationRecord
   belongs_to :job_opportunity, optional: true
   belongs_to :organization, optional: true
   belongs_to :collection, optional: true, touch: true
+  # *** will need to update here to reflect relationship with chunks
 
   counter_culture :user
   counter_culture :organization
