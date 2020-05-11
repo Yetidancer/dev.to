@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/BlockLength
 
+# *** this file will need to be updated to reflect new routes for chunks
+
 Rails.application.routes.draw do
   use_doorkeeper do
     controllers tokens: "oauth/tokens"

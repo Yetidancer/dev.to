@@ -72,3 +72,6 @@ docs/.static/api/
 
 # ES docker volume
 docker_data/
+
+# Ignore application.yml
+/config/application.yml

@@ -33,6 +33,7 @@ class StoriesController < ApplicationController
     render template: "articles/search"
   end
 
+  # below method shows article based on username and slug
   def show
     @story_show = true
     if (@article = Article.find_by(path: "/#{params[:username].downcase}/#{params[:slug]}")&.decorate)
@@ -82,16 +83,22 @@ class StoriesController < ApplicationController
     end
   end
 
+  # this method is called if the article can be found by it's slug alone (and not by user AND slug)
   def handle_possible_redirect
+    # assigns a potential_username using the username param
     potential_username = params[:username].tr("@", "").downcase
+    # finds user by using provided username to look through old usernames
     @user = User.find_by("old_username = ? OR old_old_username = ?", potential_username, potential_username)
+    # if there exists a user with the username param as an old username, display the article using the found user and provided slug
     if @user&.articles&.find_by(slug: params[:slug])
       redirect_to URI.parse("/#{@user.username}/#{params[:slug]}").path
       return
+    # if no user is found, but the article has an associated organization, display article using organization and slug
     elsif (@organization = @article.organization)
       redirect_to URI.parse("/#{@organization.slug}/#{params[:slug]}").path
       return
     end
+    # if neither of the above is true, show the not_found error
     not_found
   end
 
@@ -214,6 +221,7 @@ class StoriesController < ApplicationController
     redirect_to "/internal/articles/#{@article.id}" if params[:view] == "moderate"
   end
 
+  # this method is called if an article is found by username and slug
   def handle_article_show
     assign_article_show_variables
     set_surrogate_key_header @article.record_key
@@ -235,6 +243,7 @@ class StoriesController < ApplicationController
     end
   end
 
+  # the below method assigns instance variables to be passed to the view
   def assign_article_show_variables
     @article_show = true
     @variant_number = params[:variant_version] || (user_signed_in? ? 0 : rand(2))
