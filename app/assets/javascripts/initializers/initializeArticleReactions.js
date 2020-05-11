@@ -1,8 +1,9 @@
 /* global sendHapticMessage, showModal */
 
-'use strict';
+
 
 // Set reaction count to correct number
+// Bonus <- add indicator next to collection article button.
 function setReactionCount(reactionName, newCount) {
   var reactionClassList = document.getElementById(
     'reaction-butt-' + reactionName,

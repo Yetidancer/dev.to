@@ -1,5 +1,6 @@
 <div class="article-actions" id="article-reaction-actions">
   <% if @article.published? %>
+  <%#Add button to link to collections view%>
     <button id="reaction-butt-like" class="article-reaction-butt like-reaction-button" data-category="like" alt="heart-emoji" title="heart">
       <img alt="heart" src="<%= asset_path("emoji/emoji-one-heart.png") %>" /><span class="reaction-number" id="reaction-number-like"></span>
     </button>

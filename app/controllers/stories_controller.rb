@@ -33,6 +33,7 @@ class StoriesController < ApplicationController
     render template: "articles/search"
   end
 
+  # shows article. goes to handle_article_show and passes variables to view?
   def show
     @story_show = true
     if (@article = Article.find_by(path: "/#{params[:username].downcase}/#{params[:slug]}")&.decorate)

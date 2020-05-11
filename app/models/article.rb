@@ -21,7 +21,7 @@ class Article < ApplicationRecord
 
   counter_culture :user
   counter_culture :organization
-
+  # Will need to add in relationship to our new collections join table.
   has_many :comments, as: :commentable, inverse_of: :commentable
   has_many :profile_pins, as: :pinnable, inverse_of: :pinnable
   has_many :buffer_updates, dependent: :destroy
