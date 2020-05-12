@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,8 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_214321) do
-
+ActiveRecord::Schema.define(version: 2020_05_12_171425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -348,6 +349,23 @@ ActiveRecord::Schema.define(version: 2020_02_27_214321) do
     t.bigint "user_id"
     t.index ["purchase_id", "purchase_type"], name: "index_credits_on_purchase_id_and_purchase_type"
     t.index ["spent"], name: "index_credits_on_spent"
+  end
+
+  create_table "curated_cluster_articles", force: :cascade do |t|
+    t.bigint "article_id"
+    t.datetime "created_at", null: false
+    t.bigint "curated_cluster_id"
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_curated_cluster_articles_on_article_id"
+    t.index ["curated_cluster_id"], name: "index_curated_cluster_articles_on_curated_cluster_id"
+  end
+
+  create_table "curated_clusters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_curated_clusters_on_user_id"
   end
 
   create_table "data_update_scripts", force: :cascade do |t|
@@ -1215,6 +1233,9 @@ ActiveRecord::Schema.define(version: 2020_02_27_214321) do
   add_foreign_key "chat_channel_memberships", "chat_channels"
   add_foreign_key "chat_channel_memberships", "users"
   add_foreign_key "classified_listings", "users", on_delete: :cascade
+  add_foreign_key "curated_cluster_articles", "articles"
+  add_foreign_key "curated_cluster_articles", "curated_clusters"
+  add_foreign_key "curated_clusters", "users"
   add_foreign_key "identities", "users", on_delete: :cascade
   add_foreign_key "messages", "chat_channels"
   add_foreign_key "messages", "users"
