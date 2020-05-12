@@ -1258,3 +1258,4 @@ ActiveRecord::Schema.define(version: 2020_05_12_171425) do
   add_foreign_key "webhook_endpoints", "oauth_applications"
   add_foreign_key "webhook_endpoints", "users"
 end
+
