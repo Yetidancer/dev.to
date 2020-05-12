@@ -11,3 +11,4 @@ RSpec.describe CuratedCluster, type: :model do
     it { is_expected.to have_many(:articles).through(:curated_cluster_articles) }
   end
 end
+
