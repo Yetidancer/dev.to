@@ -7,3 +7,4 @@ class CreateCuratedCluster < ActiveRecord::Migration[5.2]
     end
   end
 end
+
