@@ -4,3 +4,4 @@ class AddUserToCuratedCluster < ActiveRecord::Migration[5.2]
     add_reference :curated_clusters, :user, foreign_key: true, index: {algorithm: :concurrently}
   end
 end
+
