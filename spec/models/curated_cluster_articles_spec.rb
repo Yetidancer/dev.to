@@ -6,3 +6,4 @@ RSpec.describe CuratedClusterArticles, type: :model do
     it { is_expected.to belong_to :curated_cluster }
   end
 end
+
