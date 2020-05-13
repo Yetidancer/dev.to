@@ -15,6 +15,7 @@ class User < ApplicationRecord
   acts_as_followable
   acts_as_follower
 
+  has_many :curated_clusters
   has_many :organization_memberships, dependent: :destroy
   has_many :organizations, through: :organization_memberships
   has_many :api_secrets, dependent: :destroy

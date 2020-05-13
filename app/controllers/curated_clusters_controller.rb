@@ -1,0 +1,11 @@
+class CuratedClustersController < ApplicationController
+
+  def index
+    user = User.find_by(username: params["username"])
+
+    @clusters = user.curated_clusters
+    
+    require "pry"; binding.pry
+  end
+
+end
