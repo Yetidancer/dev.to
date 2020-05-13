@@ -5,33 +5,18 @@ RSpec.describe "cluster show", type: :feature do
     it 'should show show page' do
       user = create(:user)
       cluster1 = user.curated_clusters.create!(name: "Dopeness #1")
+      article1 = cluster1.articles.create!
+      article2 = cluster1.articles.create!
+      article3 = cluster1.articles.create!
       cluster2 = user.curated_clusters.create!(name: "Dopeness #2")
+      article4 = cluster2.articles.create!
+      article5 = cluster2.articles.create!
+      article6 = cluster2.articles.create!
       cluster3 = user.curated_clusters.create!(name: "Dopeness #3")
-
-      user2 = create(:user)
-      cluster4 = user2.curated_clusters.create!(name: "Dopeness #4")
-      cluster5 = user2.curated_clusters.create!(name: "Dopeness #5")
-      cluster6 = user2.curated_clusters.create!(name: "Dopeness #6")
 
       visit "/users/#{user.username}/curated_clusters/#{cluster1.id}"
 
-      expect(page).to have_content("Matt's Cluster")
-    end
-
-    it 'should show show page' do
-      user = create(:user)
-      cluster1 = user.curated_clusters.create!(name: "Dopeness #1")
-      cluster2 = user.curated_clusters.create!(name: "Dopeness #2")
-      cluster3 = user.curated_clusters.create!(name: "Dopeness #3")
-
-      user2 = create(:user)
-      cluster4 = user2.curated_clusters.create!(name: "Dopeness #4")
-      cluster5 = user2.curated_clusters.create!(name: "Dopeness #5")
-      cluster6 = user2.curated_clusters.create!(name: "Dopeness #6")
-
-      visit "/users/#{user.username}/curated_clusters"
-
-      expect(page).to have_content("Matt's Cluster")
+      expect(page).to have_content("Matt's Cluster's Articles")
     end
   end
 end
