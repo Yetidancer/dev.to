@@ -24,6 +24,14 @@
     <% else %>
     <% end %>
   </a>
+
+    <div class="articleform"
+       id="Curated-Collections-Button"
+       data-something = "<%= @article.id %>" 
+    >Collections</div>
+
+    <%= javascript_pack_tag "CuratedCollectionsButton", defer: true %> 
+
   <div class="article-share-action-block">
     <button id="article-show-more-button" class="dropbtn" aria-label="Toggle dropdown menu">
       <img src="<%= asset_path("three-dots.svg") %>" class="dropdown-icon" alt="dropdown menu icon">
@@ -103,3 +111,5 @@
     <% end %>
   <% end %>
 <% end %>
+
+
