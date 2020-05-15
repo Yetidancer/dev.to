@@ -25,12 +25,16 @@
     <% end %>
   </a>
 
-    <div class="articleform"
-       id="Curated-Collections-Button"
-       data-something = "<%= @article.id %>" 
-    >Collections</div>
+  <div
+    class="article-reaction-butt"
+    id="Curated-Collections-Button"
+    data-article = "<%= @article.id %>" 
+    data-articlecreator = "<%= @article.user.name %>" 
+  >
 
-    <%= javascript_pack_tag "CuratedCollectionsButton", defer: true %> 
+  </div>
+
+    <%= javascript_pack_tag "CuratedClustersButton", defer: true %> 
 
   <div class="article-share-action-block">
     <button id="article-show-more-button" class="dropbtn" aria-label="Toggle dropdown menu">
