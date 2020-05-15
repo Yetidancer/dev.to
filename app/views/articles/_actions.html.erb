@@ -24,6 +24,15 @@
     <% else %>
     <% end %>
   </a>
+
+  <div 
+    id = "Curated-Collections-Button"
+    data-article = "<%=@article.id%>"
+    data-userid = "<%=@user.id%>"
+  ></div>
+
+  <%= javascript_pack_tag "CuratedClustersButton",defer:true %>
+
   <div class="article-share-action-block">
     <button id="article-show-more-button" class="dropbtn" aria-label="Toggle dropdown menu">
       <img src="<%= asset_path("three-dots.svg") %>" class="dropdown-icon" alt="dropdown menu icon">
