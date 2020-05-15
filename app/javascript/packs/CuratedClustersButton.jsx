@@ -6,9 +6,9 @@ function loadElement() {
   if(root) {
     render(
       <CuratedClusters 
-        article_id={root.dataset.article}
-        username={root.dataset.username}
-        clusters = {root.dataset.clusters}
+        articleId={root.dataset.article}
+        userName={root.dataset.username}
+        curatedClusters = {root.dataset.clusters}
       />,
       root,
       root.firstElementChild,

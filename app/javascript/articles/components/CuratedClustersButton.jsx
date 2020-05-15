@@ -7,40 +7,84 @@ export class CuratedClusters extends Component {
     this.state = {
       showModal: false,
       curatedClusters: [],
+      currentArticle: '',
+      currentUserName: '',
+      clusterId: null,
     };
   }
 
   componentDidMount = () => {
-    let updatedState = JSON.parse(this.props.clusters);
-    this.setState({curatedClusters:updatedState})
-  }
+    const { articleId, userName, curatedClusters } = this.props;
+    const clusterList = JSON.parse(curatedClusters);
+    //add in some edge cases for empty clusters
+    const clusterId = clusterList[0];
+    const currentUser = userName;
+    const currentArticle = articleId;
+    this.setState({
+      curatedClusters: clusterList,
+      currentUserName: currentUser,
+      currentArticle: currentArticle,
+      clusterId: clusterId,
+    });
+  };
 
   showModal = e => {
     e.preventDefault();
     let updatedState = !this.state.showModal;
     this.setState({ showModal: updatedState });
- 
-    console.log(this.state.curatedClusters)
+  };
+
+  selectHelper = e => {
+    this.setState({ clusterId: e.target.value });
+    console.log('clusterid:', this.state.clusterId);
+    console.log('userName:', this.state.currentArticle);
+    console.log('articleId:', this.state.clusterId);
+  };
+
+  fetchHelper = () => {
+    const { articleId, userName, clusterId } = this.props;
+    let payload = JSON.stringify({
+      data: {
+        user_name: userName,
+        article_id: articleId,
+        cluster_Id: clusterId,
+      },
+    });
+    fetch(`/users/${userName}/curated_clusters`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'X-CSRF-Token': window.csrfToken,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        curated_collection: payload,
+      }),
+      credentials: 'same-origin',
+    }).then(data => console.log(data));
   };
 
   renderClusters = () => {
     const { curatedClusters } = this.state;
     let collecitonHTML = curatedClusters.map(cluster => {
-      return <option>{cluster.name}</option>;
+      return <option value={`${cluster.id}`}>{cluster.name}</option>;
     });
 
-    return <select className="dropdown">{collecitonHTML}</select>;
+    return (
+      <select className="dropdown" onchange={e => this.selectHelper(e)}>
+        {collecitonHTML}
+      </select>
+    );
   };
 
   renderForm = () => {
-    const { article_id, username,clusters } = this.props;
+    const { article_id, username, clusters } = this.props;
     return (
       <div>
         <div class="modal" id="modal1">
           <div class="modal-dialog">
             <header class="modal-header">
               <div class="close-modal">
-                {username}
                 <button
                   onClick={e => this.showModal(e)}
                   aria-label="close modal"
@@ -54,7 +98,7 @@ export class CuratedClusters extends Component {
               <a
                 className="cta top-bar--link write"
                 id="sumbitCollection"
-                onClick={e => fetchHelper(username)}
+                onClick={e => this.fetchHelper()}
               >
                 Submit Cluster
               </a>
@@ -77,33 +121,5 @@ export class CuratedClusters extends Component {
     );
   }
 }
-function fetchHelper(username) {
-  let payload = JSON.stringify({
-    data: 'favorites',
-  });
-
-  fetch(`/users/${username}/curated_clusters`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'X-CSRF-Token': window.csrfToken,
-      'Content-Type': 'application/json',
-    },
-    credentials: 'same-origin',
-  }).then(data=>console.log(data))
-}
 
 CuratedClusters.displayName = 'CuratedClusters';
-
-// fetch('/CuratedClusters', {
-//   method: 'POST',
-//   headers: {
-//     Accept: 'application/json',
-//     'X-CSRF-Token': window.csrfToken,
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify({
-//     article_body: payload,
-//   }),
-//   credentials: 'same-origin',
-// });
