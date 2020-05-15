@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { getCsrfToken } from '../../chat/util';
+import PropTypes from 'prop-types';
 
 export class CuratedClusters extends Component {
   constructor(props) {
@@ -7,43 +7,37 @@ export class CuratedClusters extends Component {
     this.state = {
       showModal: false,
       curatedClusters: [],
-      currentArticle: '',
-      currentUserName: '',
       clusterId: null,
     };
   }
 
   componentDidMount = () => {
-    const { articleId, userName, curatedClusters } = this.props;
+    const { curatedClusters } = this.props;
     const clusterList = JSON.parse(curatedClusters);
-    //add in some edge cases for empty clusters
     const clusterId = clusterList[0];
-    const currentUser = userName;
-    const currentArticle = articleId;
     this.setState({
       curatedClusters: clusterList,
-      currentUserName: currentUser,
-      currentArticle: currentArticle,
-      clusterId: clusterId,
+      clusterId,
     });
   };
 
   showModal = e => {
     e.preventDefault();
-    let updatedState = !this.state.showModal;
+    const { showModal } = this.state;
+    const updatedState = !showModal;
     this.setState({ showModal: updatedState });
   };
 
   selectHelper = e => {
     this.setState({ clusterId: e.target.value });
-    console.log('clusterid:', this.state.clusterId);
-    console.log('userName:', this.state.currentArticle);
-    console.log('articleId:', this.state.clusterId);
+    // console.log('clusterid:', this.state.clusterId);
+    // console.log('userName:', this.state.currentArticle);
+    // console.log('articleId:', this.state.clusterId);
   };
 
   fetchHelper = () => {
     const { articleId, userName, clusterId } = this.props;
-    let payload = JSON.stringify({
+    const payload = JSON.stringify({
       data: {
         user_name: userName,
         article_id: articleId,
@@ -66,26 +60,26 @@ export class CuratedClusters extends Component {
 
   renderClusters = () => {
     const { curatedClusters } = this.state;
-    let collecitonHTML = curatedClusters.map(cluster => {
+    const collecitonHTML = curatedClusters.map(cluster => {
       return <option value={`${cluster.id}`}>{cluster.name}</option>;
     });
 
     return (
-      <select className="dropdown" onchange={e => this.selectHelper(e)}>
+      <select className="dropdown" onBlur={e => this.selectHelper(e)}>
         {collecitonHTML}
       </select>
     );
   };
 
   renderForm = () => {
-    const { article_id, username, clusters } = this.props;
     return (
       <div>
-        <div class="modal" id="modal1">
-          <div class="modal-dialog">
-            <header class="modal-header">
-              <div class="close-modal">
+        <div className="modal" id="modal1">
+          <div className="modal-dialog">
+            <header className="modal-header">
+              <div className="close-modal">
                 <button
+                  type="submit"
                   onClick={e => this.showModal(e)}
                   aria-label="close modal"
                 >
@@ -93,15 +87,16 @@ export class CuratedClusters extends Component {
                 </button>
               </div>
             </header>
-            <section class="modal-content">{this.renderClusters()}</section>
-            <footer class="modal-footer">
-              <a
+            <section className="modal-content">{this.renderClusters()}</section>
+            <footer className="modal-footer">
+              <button
+                type="submit"
                 className="cta top-bar--link write"
                 id="sumbitCollection"
-                onClick={e => this.fetchHelper()}
+                onClick={() => this.fetchHelper()}
               >
                 Submit Cluster
-              </a>
+              </button>
             </footer>
           </div>
         </div>
@@ -110,16 +105,35 @@ export class CuratedClusters extends Component {
   };
 
   render() {
-    const { showModal } = this.state;
+    const { showModal, clusterId } = this.state;
     return (
       <div>
-        <button id="modal" onClick={e => this.showModal(e)} type="submit">
-          Add to Collections
-        </button>
-        {showModal ? this.renderForm() : ''}
+        {clusterId ? (
+          <div>
+            <button id="modal" onClick={e => this.showModal(e)} type="submit">
+              Add to Collections
+            </button>
+            {showModal ? this.renderForm() : ''}
+          </div>
+        ) : (
+          <h2>Your personal Collections are not setup yet!</h2>
+        )}
       </div>
     );
   }
 }
 
 CuratedClusters.displayName = 'CuratedClusters';
+
+CuratedClusters.propTypes = {
+  userName: PropTypes.string.isRequired,
+  articleId: PropTypes.number.isRequired,
+  curatedClusters: PropTypes.shape({
+    id: PropTypes.number,
+    created_at: PropTypes.string,
+    name: PropTypes.string,
+    updated_at: PropTypes.string,
+    user_id: PropTypes.string,
+  }).isRequired,
+  clusterId: PropTypes.number.isRequired,
+};
