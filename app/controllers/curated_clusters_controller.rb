@@ -4,13 +4,17 @@ class CuratedClustersController < ApplicationController
 
     @clusters = user.curated_clusters
 
-    require "pry"; binding.pry
+    @serialized_clusters = @clusters.map { |cluster| { id: cluster.id, name: cluster.name } }
+
+
+
+    # require "pry"; binding.pry
   end
 
   def show
     user = User.find_by(username: params["username"])
     @cluster = CuratedCluster.find(params[:id])
     @articles = @cluster.articles
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
   end
 end
