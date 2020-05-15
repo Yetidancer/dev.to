@@ -9,6 +9,9 @@
     <button id="reaction-butt-readinglist" class="article-reaction-butt readinglist-reaction-button" data-category="readinglist" alt="unicorn-emoji" title="reading list">
       <img alt="reading list" src="<%= asset_path("emoji/emoji-one-bookmark.png") %>" /><span class="reaction-number" id="reaction-number-readinglist"></span>
     </button>
+
+    <div class=“curated-cluster” id=“curated-cluster” data-curatedClusters="<%=@user.curated_clusters%>"> </div>
+
     <a class="article-actions-tweet-button"
       id="article-actions-tweet-button"
       rel="noopener"
