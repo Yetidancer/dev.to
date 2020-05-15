@@ -412,10 +412,10 @@ Rails.application.routes.draw do
   get "/:username/:slug" => "stories#show"
   get "/:username" => "stories#index"
 
-  #***
-  get '/users/:username/curated_clusters' => 'curated_clusters#index'
-  get '/users/:username/curated_clusters/:id' => 'curated_clusters#show'
-  post '/users/:username/curated_clusters/new' => 'curated_clusters#new'
+  get "/users/:username/curated_clusters" => "curated_clusters#index"
+  get "/users/:username/curated_clusters/new" => "curated_clusters#new"
+  get "/users/:username/curated_clusters/:id" => "curated_clusters#show"
+  post "/users/:username/curated_clusters" => "curated_clusters#create"
 
   root "stories#index"
 end
