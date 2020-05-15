@@ -1,2 +1,5 @@
 <%= @clusters %>
-Hi mom
+
+<%= link_to "New Curated Cluster", "/users/#{@user.username}/curated_clusters/new" %>
+
+<%= link_to "Curated Clusters", "/users/#{@user.username}/curated_clusters" %>

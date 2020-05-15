@@ -35,6 +35,12 @@ class StoriesController < ApplicationController
 
   def show
     @story_show = true
+    #***insert instance variable for user here
+    @user = User.find_by(username: params["username"])
+
+    @clusters = @user.curated_clusters
+
+
     if (@article = Article.find_by(path: "/#{params[:username].downcase}/#{params[:slug]}")&.decorate)
       handle_article_show
     elsif (@article = Article.find_by(slug: params[:slug])&.decorate)

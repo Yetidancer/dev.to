@@ -415,6 +415,7 @@ Rails.application.routes.draw do
   #***
   get '/users/:username/curated_clusters' => 'curated_clusters#index'
   get '/users/:username/curated_clusters/:id' => 'curated_clusters#show'
+  post '/users/:username/curated_clusters/new' => 'curated_clusters#new'
 
   root "stories#index"
 end
