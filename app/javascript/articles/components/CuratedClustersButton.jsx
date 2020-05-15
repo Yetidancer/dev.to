@@ -83,7 +83,7 @@ export class CuratedClusters extends Component {
                   onClick={e => this.showModal(e)}
                   aria-label="close modal"
                 >
-                  ✕
+                  [X]Close
                 </button>
               </div>
             </header>
@@ -91,7 +91,7 @@ export class CuratedClusters extends Component {
             <footer className="modal-footer">
               <button
                 type="submit"
-                className="cta top-bar--link write"
+                className="cta cta-button"
                 id="sumbitCollection"
                 onClick={() => this.fetchHelper()}
               >
