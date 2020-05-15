@@ -7,7 +7,7 @@ function loadElement() {
     render(
       <CuratedClusters 
         article_id={root.dataset.article}
-        user_id={root.dataset.userid}
+        username={root.dataset.username}
         clusters = {root.dataset.clusters}
       />,
       root,

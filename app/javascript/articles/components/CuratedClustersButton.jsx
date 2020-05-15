@@ -5,37 +5,42 @@ export class CuratedClusters extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      testCollections: ['one', 'two'],
       showModal: false,
       curatedClusters: [],
     };
+  }
+
+  componentDidMount = () => {
+    let updatedState = JSON.parse(this.props.clusters);
+    this.setState({curatedClusters:updatedState})
   }
 
   showModal = e => {
     e.preventDefault();
     let updatedState = !this.state.showModal;
     this.setState({ showModal: updatedState });
-    console.log(this.props.clusters)
+ 
+    console.log(this.state.curatedClusters)
   };
 
   renderClusters = () => {
-    const { testCollections } = this.state;
-    let collecitonHTML = testCollections.map(collection => {
-      return <option>{collection}</option>;
+    const { curatedClusters } = this.state;
+    let collecitonHTML = curatedClusters.map(cluster => {
+      return <option>{cluster.name}</option>;
     });
 
     return <select className="dropdown">{collecitonHTML}</select>;
   };
 
   renderForm = () => {
-    const { article_id, user_id,clusters } = this.props;
+    const { article_id, username,clusters } = this.props;
     return (
       <div>
-        {clusters}
         <div class="modal" id="modal1">
           <div class="modal-dialog">
             <header class="modal-header">
               <div class="close-modal">
+                {username}
                 <button
                   onClick={e => this.showModal(e)}
                   aria-label="close modal"
@@ -49,11 +54,10 @@ export class CuratedClusters extends Component {
               <a
                 className="cta top-bar--link write"
                 id="sumbitCollection"
-                onClick={e => fetchHelper()}
+                onClick={e => fetchHelper(username)}
               >
                 Submit Cluster
               </a>
-              {user_id}
             </footer>
           </div>
         </div>
@@ -73,23 +77,33 @@ export class CuratedClusters extends Component {
     );
   }
 }
-function fetchHelper() {
+function fetchHelper(username) {
   let payload = JSON.stringify({
     data: 'favorites',
   });
 
-  fetch('/CuratedClusters', {
-    method: 'POST',
+  fetch(`/users/${username}/curated_clusters`, {
+    method: 'GET',
     headers: {
       Accept: 'application/json',
       'X-CSRF-Token': window.csrfToken,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      article_body: payload,
-    }),
     credentials: 'same-origin',
-  });
+  }).then(data=>console.log(data))
 }
 
 CuratedClusters.displayName = 'CuratedClusters';
+
+// fetch('/CuratedClusters', {
+//   method: 'POST',
+//   headers: {
+//     Accept: 'application/json',
+//     'X-CSRF-Token': window.csrfToken,
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify({
+//     article_body: payload,
+//   }),
+//   credentials: 'same-origin',
+// });

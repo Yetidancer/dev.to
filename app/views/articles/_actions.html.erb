@@ -25,10 +25,7 @@
     <% else %>
     <% end %>
   </a>
-  <% @clusters.each do |cluster| %>
-    <%= cluster.name %>
-  <% end %>
-  <div data-clusters = "<%=@clusters.all.%>" data-article = "<%=@article.id%>" data-userid = "<%=@user.id%>" id="Curated-Collections-Button"></div>
+  <div data-clusters = "<%=@current_user.curated_clusters.to_json%>" data-article = "<%=@article.id%>" data-username = "<%=@current_user.name%>" id="Curated-Collections-Button"></div>
   <%= javascript_pack_tag "CuratedClustersButton",defer:true %>
   <div class="article-share-action-block">
     <button id="article-show-more-button" class="dropbtn" aria-label="Toggle dropdown menu">
