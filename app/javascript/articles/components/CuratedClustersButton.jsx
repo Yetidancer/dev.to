@@ -30,13 +30,11 @@ export class CuratedClusters extends Component {
 
   selectHelper = e => {
     this.setState({ clusterId: e.target.value });
-    // console.log('clusterid:', this.state.clusterId);
-    // console.log('userName:', this.state.currentArticle);
-    // console.log('articleId:', this.state.clusterId);
   };
 
   fetchHelper = () => {
-    const { articleId, userName, clusterId } = this.props;
+    const { articleId, userName } = this.props;
+    const { clusterId } = this.state;
     const payload = JSON.stringify({
       user_name: userName,
       article_id: articleId,
@@ -49,9 +47,7 @@ export class CuratedClusters extends Component {
         'X-CSRF-Token': window.csrfToken,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        curated_collection: payload,
-      }),
+      body: payload,
       credentials: 'same-origin',
     }).then(data => console.log(data));
   };
@@ -103,19 +99,15 @@ export class CuratedClusters extends Component {
   };
 
   render() {
-    const { showModal, clusterId } = this.state;
+    const { showModal } = this.state;
     return (
       <div>
-        {clusterId ? (
-          <div>
-            <button id="modal" onClick={e => this.showModal(e)} type="submit">
-              Add to Collections
-            </button>
-            {showModal ? this.renderForm() : ''}
-          </div>
-        ) : (
-          <h2>Your personal Collections are not setup yet!</h2>
-        )}
+        <div>
+          <button id="modal" onClick={e => this.showModal(e)} type="submit">
+            Add to Collections
+          </button>
+          {showModal ? this.renderForm() : ''}
+        </div>
       </div>
     );
   }
@@ -133,5 +125,4 @@ CuratedClusters.propTypes = {
     updated_at: PropTypes.string,
     user_id: PropTypes.string,
   }).isRequired,
-  clusterId: PropTypes.number.isRequired,
 };
