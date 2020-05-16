@@ -10,8 +10,6 @@
       <img alt="reading list" src="<%= asset_path("emoji/emoji-one-bookmark.png") %>" /><span class="reaction-number" id="reaction-number-readinglist"></span>
     </button>
 
-    <div class=“curated-cluster” id=“curated-cluster” data-curatedClusters="<%=@user.curated_clusters%>"> </div>
-
     <a class="article-actions-tweet-button"
       id="article-actions-tweet-button"
       rel="noopener"
@@ -27,6 +25,10 @@
     <% else %>
     <% end %>
   </a>
+  <% if user_signed_in? %>
+    <div data-clusters = "<%=@current_user.curated_clusters.to_json%>" data-article = "<%=@article.id%>" data-username = "<%=@current_user.name%>" id="Curated-Collections-Button"></div>
+    <%= javascript_pack_tag "CuratedClustersButton",defer:true %>
+  <% end %>
   <div class="article-share-action-block">
     <button id="article-show-more-button" class="dropbtn" aria-label="Toggle dropdown menu">
       <img src="<%= asset_path("three-dots.svg") %>" class="dropdown-icon" alt="dropdown menu icon">
