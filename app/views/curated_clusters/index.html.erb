@@ -1,7 +1,15 @@
-<% @clusters.each do |cluster| %>
-  <div>
-    <%= link_to cluster.name.to_s, "/users/#{@user.username}/curated_clusters/#{cluster.id}" %>
+<div class ="curated-container">
+  <div class = "curated-cluster-list">
+    <div class = "clusters-header">
+      Your Clusters:
+    </div>
+      <% @clusters.each do |cluster| %>
+        <div class = "cluster">
+          <%= link_to cluster.name.to_s, "/users/#{@user.username}/curated_clusters/#{cluster.id}" %>
+        </div>
+      <% end %>
   </div>
-<% end %>
+      <%= link_to "Create New Curated Cluster", "/users/#{@user.username}/curated_clusters/new" %>
+</div>
 
-<%= link_to "New Curated Cluster", "/users/#{@user.username}/curated_clusters/new" %>
+
