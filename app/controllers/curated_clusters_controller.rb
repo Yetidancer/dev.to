@@ -19,6 +19,12 @@ class CuratedClustersController < ApplicationController
     redirect_to "/users/#{@user.username}/curated_clusters"
   end
 
+  def addarticle
+    cluster = CuratedCluster.find(params["cluster_id"])
+    article = Article.find(params["article_id"])
+    cluster.articles << article
+  end
+
   private
 
   def cluster_params

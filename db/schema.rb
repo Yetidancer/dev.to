@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 2020_05_12_171425) do
     t.index ["user_id"], name: "index_api_secrets_on_user_id"
   end
 
+  create_table "article_collections", force: :cascade do |t|
+    t.bigint "article_id"
+    t.datetime "created_at", null: false
+    t.string "status", default: "Unread"
+    t.datetime "updated_at", null: false
+    t.bigint "user_collection_id"
+    t.index ["article_id"], name: "index_article_collections_on_article_id"
+    t.index ["user_collection_id"], name: "index_article_collections_on_user_collection_id"
+  end
+
   create_table "articles", id: :serial, force: :cascade do |t|
     t.string "abuse_removal_reason"
     t.boolean "allow_big_edits", default: true
@@ -292,6 +302,13 @@ ActiveRecord::Schema.define(version: 2020_05_12_171425) do
     t.bigint "user_id"
     t.index ["organization_id"], name: "index_classified_listings_on_organization_id"
     t.index ["user_id"], name: "index_classified_listings_on_user_id"
+  end
+
+  create_table "collection_articles", force: :cascade do |t|
+    t.bigint "article_id"
+    t.bigint "collection_id"
+    t.index ["article_id"], name: "index_collection_articles_on_article_id"
+    t.index ["collection_id"], name: "index_collection_articles_on_collection_id"
   end
 
   create_table "collections", id: :serial, force: :cascade do |t|
@@ -911,6 +928,12 @@ ActiveRecord::Schema.define(version: 2020_05_12_171425) do
     t.index ["var"], name: "index_site_configs_on_var", unique: true
   end
 
+  create_table "songs", force: :cascade do |t|
+    t.integer "length"
+    t.integer "play_count"
+    t.string "title"
+  end
+
   create_table "sponsorships", force: :cascade do |t|
     t.text "blurb_html"
     t.datetime "created_at", null: false
@@ -1035,6 +1058,15 @@ ActiveRecord::Schema.define(version: 2020_05_12_171425) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["blocked_id", "blocker_id"], name: "index_user_blocks_on_blocked_id_and_blocker_id", unique: true
+  end
+
+  create_table "user_collections", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id", "title"], name: "index_user_collections_on_user_id_and_title", unique: true
+    t.index ["user_id"], name: "index_user_collections_on_user_id"
   end
 
   create_table "user_counters", force: :cascade do |t|
@@ -1227,6 +1259,7 @@ ActiveRecord::Schema.define(version: 2020_05_12_171425) do
   end
 
   add_foreign_key "api_secrets", "users", on_delete: :cascade
+  add_foreign_key "article_collections", "user_collections"
   add_foreign_key "audit_logs", "users"
   add_foreign_key "badge_achievements", "badges"
   add_foreign_key "badge_achievements", "users"
@@ -1258,4 +1291,3 @@ ActiveRecord::Schema.define(version: 2020_05_12_171425) do
   add_foreign_key "webhook_endpoints", "oauth_applications"
   add_foreign_key "webhook_endpoints", "users"
 end
-

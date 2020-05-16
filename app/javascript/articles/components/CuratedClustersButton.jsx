@@ -38,13 +38,11 @@ export class CuratedClusters extends Component {
   fetchHelper = () => {
     const { articleId, userName, clusterId } = this.props;
     const payload = JSON.stringify({
-      data: {
-        user_name: userName,
-        article_id: articleId,
-        cluster_Id: clusterId,
-      },
+      user_name: userName,
+      article_id: articleId,
+      cluster_id: clusterId,
     });
-    fetch(`/users/${userName}/curated_clusters`, {
+    fetch(`/users/${userName}/curated_cluster_articles`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
