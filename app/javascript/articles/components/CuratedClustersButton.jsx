@@ -6,20 +6,10 @@ export class CuratedClusters extends Component {
     super(props);
     this.state = {
       showModal: false,
-      curatedClusters: [],
-      clusterId: null,
+      clusterId: this.props.curatedClusters[0].id,
+      success:false
     };
   }
-
-  componentDidMount = () => {
-    const { curatedClusters } = this.props;
-    const clusterList = JSON.parse(curatedClusters);
-    const clusterId = clusterList[0];
-    this.setState({
-      curatedClusters: clusterList,
-      clusterId,
-    });
-  };
 
   showModal = e => {
     e.preventDefault();
@@ -49,11 +39,11 @@ export class CuratedClusters extends Component {
       },
       body: payload,
       credentials: 'same-origin',
-    }).then(data => console.log(data));
+    }).then(() => this.setState({success:true}));
   };
 
   renderClusters = () => {
-    const { curatedClusters } = this.state;
+    const { curatedClusters } = this.props;
     const collecitonHTML = curatedClusters.map(cluster => {
       return <option value={`${cluster.id}`}>{cluster.name}</option>;
     });
@@ -66,8 +56,31 @@ export class CuratedClusters extends Component {
   };
 
   renderForm = () => {
+    const {curatedClusters} = this.props;
+    const {success} = this.state;
+    if(curatedClusters.length<0){
+      return(
+        <div className="modal" id="modal1">
+          <div className="modal-dialog">
+            <header className="modal-header">
+              <div className="close-modal">
+                <button
+                  type="submit"
+                  onClick={e => this.showModal(e)}
+                  aria-label="close modal"
+                >
+                  [X]Close
+                </button>
+              </div>
+            </header>
+            <section className="modal-content">You currently have no collections</section>
+          </div>
+        </div>
+      )
+    }
+
     return (
-      <div>
+
         <div className="modal" id="modal1">
           <div className="modal-dialog">
             <header className="modal-header">
@@ -91,10 +104,11 @@ export class CuratedClusters extends Component {
               >
                 Submit Cluster
               </button>
+              {success?<div>Your article was added!</div>:''}
             </footer>
           </div>
         </div>
-      </div>
+
     );
   };
 
