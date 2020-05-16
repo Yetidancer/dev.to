@@ -1,2 +1,2 @@
-<%= @cluster %>
-<%= @articles %>
+<div data-articles = "<%= @articles.to_json %>" data-cluster = "<%= @cluster.to_json %>"  id="Curated-Collections-Container"></div>
+<%= javascript_pack_tag "CuratedClustersShow",defer:true %>
