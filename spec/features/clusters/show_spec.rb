@@ -22,7 +22,7 @@ RSpec.describe "cluster show", type: :feature do
       cluster_article4 = CuratedClusterArticle.create!(article_id: article4.id, curated_cluster_id: cluster2.id)
       cluster_article5 = CuratedClusterArticle.create!(article_id: article5.id, curated_cluster_id: cluster3.id)
       cluster_article6 = CuratedClusterArticle.create!(article_id: article6.id, curated_cluster_id: cluster3.id)
-      require "pry"; binding.pry
+
 
       visit "/users/#{user.username}/curated_clusters/#{cluster1.id}"
 
