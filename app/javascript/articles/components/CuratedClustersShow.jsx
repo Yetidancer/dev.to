@@ -47,7 +47,7 @@ export class CuratedClustersShow extends Component {
     const clusterName = JSON.parse(cluster).name;
     return (
       <div className="articles-list">
-        <div className="clusters-header">{clusterName}</div>
+        <div className="results-header">{clusterName}</div>
         {this.showArticles(articles)}
       </div>
     );
